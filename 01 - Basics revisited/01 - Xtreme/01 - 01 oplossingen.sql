@@ -59,3 +59,14 @@ group by case
 	when salary >= 40000 and salary <= 50000 then 'Clerk'
 	else 'Manager'
 end
+
+-- 10. Which suppliers (Id and name) deliver products from the class "Bicycle"?
+SELECT distinct p.supplierID, s.supplierName, pc.ProductClassName
+from Product p 
+	join Supplier s on p.SupplierID = s.SupplierID 
+	join ProductClass pc on p.ProductClassID = pc.ProductClassID
+where pc.ProductClassName like 'Bicycle'
+
+-- 11. Give for each supplier the number of orders that contain products of that supplier. 
+-- Show supplierID, supplier name and the number of orders. Order the results alphabetically by the name of the supplier.
+select * from Orders
