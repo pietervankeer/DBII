@@ -69,4 +69,28 @@ where pc.ProductClassName like 'Bicycle'
 
 -- 11. Give for each supplier the number of orders that contain products of that supplier. 
 -- Show supplierID, supplier name and the number of orders. Order the results alphabetically by the name of the supplier.
-select * from Orders
+select s.supplierID, s.supplierName, COUNT(distinct o.OrderID) as "aantal orders"
+from OrdersDetail o
+join Product p on o.ProductID = p.ProductID
+join Supplier s on p.SupplierID = s.SupplierID
+group by s.SupplierID, s.SupplierName
+
+-- 12. What’s for each type the lowest productprice of products for Youth? Show producttypename and lowest. 
+select pt.producttypename, MIN(Price) 
+from Product p 
+join ProductType pt on p.ProductTypeID = pt.ProductTypeID
+where M_F = 'Y'
+group by pt.producttypename
+
+-- 13. Give for each purchased productId: productname, the least and the most ordered. Order by productname.
+select p.Productname, MIN(Quantity) as 'least ordered', MAX(quantity) as 'most ordered' 
+from OrdersDetail o
+join Product p on p.ProductID = o.ProductID
+group by p.Productname
+order by p.Productname
+
+-- 14. Give a summary for each employee with orderID, employeeID and employeename. 
+select o.EmployeeID, e.FirstName + ' ' + e.LastName as "employeename", o.OrderID
+from Orders o
+join Employee e on e.EmployeeID = o.EmployeeID
+order by  o.EmployeeID, o.OrderID
