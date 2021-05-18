@@ -42,3 +42,35 @@ select Amount, count(*) as 'Aantal Customers'
 from OrdersPerCustomer
 group by amount
 order by amount
+
+-- 3. Show all parts that are directly or indirectly part of O2, so all parts of which O2 is composed. Use the new Parts table you added in the Getting Started section.
+WITH Relation(Super,Sub) as
+(
+select super, sub 
+from parts
+where super = 'O2'
+
+union all
+
+select Parts.Super, Parts.Sub
+from Parts
+	join Relation on Parts.Super = Relation.Sub
+)
+select * from Relation
+
+
+-- 4. Add an extra column to the last query with the Path as shown below:
+
+WITH Relation(Super,Sub) as
+(
+select super, sub,     ,[Path] =  CAST(CONCAT(Super, ' <- ',Sub) AS NVARCHAR(MAX))
+from parts
+where super = 'O2'
+
+union all
+
+select Parts.Super, Parts.Sub
+from Parts
+	join Relation on Parts.Super = Relation.Sub
+)
+select * from Relation
