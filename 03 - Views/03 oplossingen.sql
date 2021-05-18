@@ -49,21 +49,7 @@ go
 -- 3. Query the VIEW to see the results
 select * from vw_price_increasing_products
 -- 4. Increase the price of the resultset of the VIEW: vw_price_increasing_products by 2%
-USE [xtreme]
-GO
-
-/****** Object:  View [dbo].[vw_price_increasing_products]    Script Date: 18/05/2021 16:59:49 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-ALTER view [dbo].[vw_price_increasing_products] as
-select ProductID as 'ID', ProductName as 'Name', Price*1.02 as 'Price'
-from Product
-where ProductName like 'Guardian%' or ProductID in ( 4101 )
-GO
+update vw_price_increasing_products
+set Price = Price*1.02
 -- 5. Query the VIEW to see the updated results. 
 select * from vw_price_increasing_products
